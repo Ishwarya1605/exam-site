@@ -1,0 +1,940 @@
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .12s ease, box-shadow .12s ease, background .15s ease, color .15s ease;
+  will-change: transform, box-shadow;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  }
+}
+
+.primaryCta {
+  @extend .btn;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  color: #fff;
+}
+
+.secondaryCta {
+  @extend .btn;
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #0b1020;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+}
+
+.logo {
+  font-weight: 700;
+  color: #fff;
+}
+
+.logoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logoImg {
+  height: 48px;
+  display: block;
+  filter: brightness(0) invert(1);
+  opacity: .95;
+  transition: opacity .15s ease;
+}
+
+.logoLink:hover .logoImg {
+  opacity: 1;
+}
+
+.rightCluster {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav {
+  display: none;
+  gap: 20px;
+
+  a {
+    color: #d1d5db;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: background .15s ease, color .15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, .06);
+      color: #fff;
+    }
+  }
+}
+
+.actions {
+  display: none;
+  align-items: center;
+  gap: 10px;
+
+  .loginBtn {
+    @extend .btn;
+    color: #e5e7eb;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .signupBtn {
+    @extend .btn;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: #fff;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+  }
+
+  .actions {
+    display: flex;
+  }
+}
+
+.hero {
+  background: radial-gradient(1200px 600px at 80% -20%, rgba(59, 130, 246, .25), rgba(59, 130, 246, 0) 60%),
+    radial-gradient(900px 500px at -10% -10%, rgba(124, 58, 237, .25), rgba(124, 58, 237, 0) 60%),
+    linear-gradient(180deg, #0b1020 0%, #0f172a 100%);
+  padding: 64px 0;
+  color: #e5e7eb;
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .heroText h1 {
+    color: #fff;
+    font-size: 40px;
+    line-height: 45px;
+    margin: 0 0 20px;
+  }
+
+  .heroText p {
+    color: #cbd5e1;
+    margin: 0 0 30px;
+    line-height: 25px;
+  }
+
+  .heroCtas {
+    display: flex;
+    gap: 12px;
+  }
+
+  .heroArt img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 16px 40px rgba(0, 0, 0, .35));
+  }
+}
+
+@media (min-width: 900px) {
+  .hero .container {
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+  }
+}
+
+.sectionHead {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0 0 6px;
+  }
+
+  p {
+    margin: 0;
+    color: #4b5563;
+  }
+}
+
+.coursesSection {
+  padding: 48px 0;
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    will-change: transform, box-shadow;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: #d1d5db;
+      box-shadow: 0 12px 30px rgba(2, 6, 23, .08);
+    }
+
+    img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .cardBody {
+      padding: 12px;
+
+      h3 {
+        margin: 0 0 6px;
+        font-size: 18px;
+        line-height: 1.25;
+      }
+
+      .cardMeta {
+        display: flex;
+        gap: 10px;
+        color: #6b7280;
+        font-size: 13px;
+      }
+
+      .cardActions {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .detailsBtn {
+        @extend .btn;
+        background: #0f172a;
+        color: #e5e7eb;
+      }
+
+      .buyBtn {
+        @extend .btn;
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        color: #052e16;
+      }
+    }
+  }
+}
+
+@media (min-width: 640px) {
+  .coursesSection .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .coursesSection .cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.features {
+  background: #f8fafc;
+  padding: 48px 0;
+
+  .featureGrid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .feature {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      border-color: #d1d5db;
+      box-shadow: 0 12px 30px rgba(2, 6, 23, .08);
+    }
+
+    .featureIcon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      color: #2563eb;
+    }
+
+    h3 {
+      margin: 0 0 6px;
+    }
+
+    p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 20px;
+
+    }
+  }
+}
+
+@media (min-width: 900px) {
+  .features .featureGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.footer {
+  background: #0b1020;
+  color: #cbd5e1;
+  padding: 32px 0;
+
+  .footerTop {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 16px;
+  }
+
+  .footerBrand .logo {
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .footerLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    h4 {
+      color: #e5e7eb;
+      margin: 0 0 8px;
+    }
+
+    a {
+      display: block;
+      color: #94a3b8;
+      text-decoration: none;
+      margin: 4px 0;
+    }
+  }
+
+  .footerBottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 12px;
+    font-size: 14px;
+    color: #94a3b8;
+  }
+}
+
+.loading {
+  text-align: center;
+  color: #6b7280;
+}
+
+.error {
+  text-align: center;
+  color: #ef4444;
+}
+
+/* Global button variants for use outside cards (e.g., detail page) */
+.detailsBtn {
+  @extend .btn;
+  background: #0f172a;
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.buyBtn {
+  @extend .btn;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #052e16;
+}
+
+/* Checkout layout */
+.checkoutSection {
+  background: #f8fafc;
+  padding: 24px 0 48px;
+}
+
+.checkoutGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.leftCol {
+  display: grid;
+  gap: 16px;
+}
+
+.rightCol {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 1024px) {
+  .checkoutGrid {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+.banner {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #7c2d12;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.bannerTitle {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.bannerText {
+  font-size: 14px;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.panelTitle {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.successNote {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 700px) {
+  .infoGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.infoLabel {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.infoValue {
+  font-weight: 600;
+}
+
+.helpText {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 12px;
+  color: #374151;
+  margin: 10px 0 6px;
+}
+
+.textInput {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .12s ease, box-shadow .12s ease;
+
+  &:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+  }
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .row2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.policyText {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.policyLink {
+  color: #2563eb;
+  text-decoration: underline;
+  font-size: 14px;
+}
+
+.summaryCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.summaryTitle {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.summaryRow,
+.summaryRowTotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.summaryRowTotal {
+  border-bottom: none;
+  font-size: 16px;
+}
+
+.termsRow {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  color: #374151;
+  align-items: center;
+}
+
+.payBtn {
+  @extend .btn;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  color: #fff;
+  width: 100%;
+}
+
+.smallList {
+  display: grid;
+  gap: 8px;
+}
+
+.smallItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px;
+
+  img {
+    width: 56px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+}
+
+/* Course detail page */
+.courseDetailHero {
+  background: #eef2ff;
+  padding: 28px 0;
+}
+
+.courseDetailGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.breadcrumbs {
+  display: flex;
+  gap: 8px;
+  color: #475569;
+  font-size: 13px;
+  margin-bottom: 6px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.crumbCurrent {
+  color: #0f172a;
+}
+
+.courseTitle {
+  margin: 8px 0 8px;
+  font-size: 34px;
+  line-height: 1.15;
+  color: #0f172a;
+}
+
+.courseSubtitle {
+  margin: 0 0 12px;
+  color: #334155;
+}
+
+.metaBadges {
+  display: flex;
+  gap: 10px;
+  color: #475569;
+  font-size: 13px;
+}
+
+.starRow {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.star {
+  color: #f59e0b;
+}
+
+.starHalf {
+  color: #fbbf24;
+  opacity: .8;
+}
+
+.muted {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.badge {
+  background: #eef2ff;
+  border: 1px solid #e5e7eb;
+  padding: 4px 8px;
+  border-radius: 999px;
+}
+
+.wishlistBtn {
+  margin-top: 8px;
+  @extend .btn;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: #0f172a;
+}
+
+.priceCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  position: sticky;
+  top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.priceCardImg {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.priceNow {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.priceWas {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.actionsCol {
+  display: grid;
+  gap: 10px;
+}
+
+.couponRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.couponInput {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.couponBtn {
+  @extend .btn;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+.whatsIncluded {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+}
+
+.whatsIncluded ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.whatsTitle {
+  font-weight: 700;
+}
+
+.courseOverview {
+  background: #fff;
+  padding: 28px 0;
+}
+
+.overviewGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .overviewGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.checkList {
+  padding-left: 20px;
+}
+
+.checkList li {
+  margin: 8px 0;
+}
+
+.courseSyllabus {
+  background: #f8fafc;
+  padding: 28px 0;
+}
+
+.syllabusList {
+  display: grid;
+  gap: 10px;
+}
+
+.syllabusItem {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.syllabusItem summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+
+.summaryMeta {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.syllabusBody {
+  margin-top: 10px;
+  color: #374151;
+  display: grid;
+  gap: 10px;
+}
+
+.faqSection {
+  background: #fff;
+  padding: 28px 0;
+}
+
+.faqList {
+  display: grid;
+  gap: 10px;
+}
+
+.faqItem {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.faqItem summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.faqBody {
+  margin-top: 8px;
+  color: #475569;
+}
+
+.relatedSection {
+  background: #fff;
+  padding: 28px 0;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 700px) {
+  .relatedGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.relatedCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: #d1d5db;
+    box-shadow: 0 12px 30px rgba(2, 6, 23, .06);
+  }
+
+  img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+  }
+}
+
+.relatedBody {
+  padding: 10px 12px;
+}
+
+.courseInstructor {
+  background: #fff;
+  padding: 28px 0;
+}
+
+.instructorCard {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.instructorAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #0b1020;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.instructorName {
+  font-weight: 700;
+}
+
+.instructorBio {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Main two-column with sticky right */
+.courseMain {
+  background: #fff;
+  padding: 0 0 28px;
+}
+
+.courseMainGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 1024px) {
+  .courseMainGrid {
+    grid-template-columns: 1.6fr 1fr;
+    align-items: start;
+  }
+}
+
+.mainRight .priceCard {
+  position: sticky;
+  top: 16px;
+}

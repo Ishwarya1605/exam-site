@@ -1,0 +1,156 @@
+
+$hover-bg: rgba(255, 255, 255, 0.15);
+$active-bg: rgba(255, 255, 255, 0.25);
+$contrast-hover: #ffffff;
+
+.adminSidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 355px;
+  width: 17%;
+  height: 100vh;
+  background: var(--btn-color);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 1;
+
+  .logo {
+    text-align: center;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 30px;
+    padding: 0 0 20px 20px;
+    font-size: 23px;
+    font-weight: bold;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+  }
+
+  .logoutContainer {
+    margin-top: auto;
+    padding: 10px 0;
+  }
+}
+
+.link,
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #f4f4f4;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  .icon {
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease;
+  }
+
+  &:hover {
+    background: $hover-bg;
+    color: $contrast-hover;
+
+    .icon {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.active {
+  background: $active-bg;
+  color: #fff;
+  font-weight: 600;
+  border-left: 4px solid #fff;
+  padding-left: 16px;
+}
+
+.menuButton {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1200;
+  background: var(--btn-color);
+  color: #fff;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background: var(--btn-color);
+  }
+}
+
+.collapseBtn {
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 6px;
+  padding: 8px;
+  cursor: pointer;
+  color: #fff;
+  background-color: transparent;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+}
+
+.collapsed {
+  width: 70px;
+
+  .label {
+    display: none;
+  }
+
+  .link,
+  .logoutBtn {
+    justify-content: center;
+
+    .icon {
+      margin-right: 0;
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .adminSidebar {
+    width: 200px;
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+}
+
+@media (max-width: 360px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,119 @@
+:root {
+  --primary-color: #9d40ad;
+  --hover-color: #b76dd4;
+  --text-color: #333;
+  --btn-color: #9d40ad;
+  --border-color: #e8cdec;
+  --bg-color: #f9f9f9;
+  --white: #fff;
+  --cancel-color: #6c757d;
+  --danger-color: #e63946;
+   --font-family: 'Inter', sans-serif;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+  width: 100%;
+  background-color: var(--bg-color);
+  font-family: var(--font-family)
+
+}
+.front-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color:var(--bg-color);
+  font-family: var(--font-family);
+  
+
+  .front-hero {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 20px;
+    max-width: 1200px;
+    width: 100%;
+
+    .front-text {
+      max-width: 600px;
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--text-color)
+      }
+
+      p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        color:var(--text-color)
+      }
+
+      .front-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+
+        .btn {
+          padding: 0.75rem 1.5rem;
+          border-radius: 6px;
+          font-weight: bold;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.2s;
+          background-color: var(--primary-color);
+          color:var(--white);
+
+          &:hover {
+            background-color:var(--hover-color);          }
+
+        }
+      }
+    }
+
+    .front-image {
+      img {
+        max-width: 600px;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .front-hero {
+      flex-direction: column;
+      text-align: center;
+
+      .front-image {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+ 
+
+  .admin-content {
+    
+    padding: 1rem;
+    transition: all 0.3s ease;
+    width: 79%;
+    margin-left: auto; 
+  }
+
+  @media (max-width: 768px) {
+    .admin-content {
+      width: 100%;
+      padding: 0.5rem;
+    }
+  }
+}

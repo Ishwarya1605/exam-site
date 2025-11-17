@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rajdhani:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+
+
+
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .cardTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .iconBox {
+    padding: 0.7rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .percent {
+    color: #16a34a;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    margin: 0.9rem 0 0.2rem;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Outfit";
+    color: #1E293B;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+
+  p {
+    color: #475569;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Inter";
+    letter-spacing: 0%;
+    line-height: 100%;
+  }
+}
+

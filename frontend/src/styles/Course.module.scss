@@ -1,0 +1,499 @@
+.courseModule {
+  padding: 20px;
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+
+  .courseHeading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.5rem;
+
+    h1 {
+      font-weight: 700;
+      font-style: Bold;
+      font-size: 30px;
+    }
+
+
+  }
+
+  @media (max-width: 1024px) {
+    .courseHeading {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .courseHeading {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+  }
+
+  @media (max-width: 480px) {
+    .courseHeading {
+      flex-direction: column;
+      text-align: left;
+      gap: 0.5rem;
+
+      h1 {
+        text-align: center;
+      }
+
+      p {
+        text-align: center;
+      }
+
+    }
+  }
+
+  .filterSection {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .filterWrapper {
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 8px 12px;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.95rem;
+      color: var(--text-color);
+      background: transparent;
+    }
+
+    .filterIcon {
+      margin-right: 8px;
+      color: var(--primary-color);
+      font-size: 16px;
+    }
+  }
+
+  .createBtn {
+    color: var(--white);
+    cursor: pointer;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: .95rem;
+    font-weight: 500;
+    transition: all .3s;
+
+    &:hover {
+      background-color: var(--hover-color);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .filterSection {
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .filterWrapper {
+      width: 280px;
+    }
+
+    .createBtn {
+      padding: 9px 16px;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filterSection {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .filterWrapper {
+      width: 100%;
+      max-width: 400px;
+
+    }
+
+    .createBtn {
+      width: 100%;
+      max-width: 200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .filterSection {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .filterWrapper {
+      width: 100%;
+      max-width: 90%;
+      padding: 6px 10px;
+    }
+
+    .createBtn {
+      width: 100%;
+      font-size: 0.85rem;
+      padding: 8px 14px;
+    }
+  }
+
+  .cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 1rem;
+    padding: 0;
+    justify-items: center;
+  }
+
+  .courseCard {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .courseStudent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .courseLevel {
+      padding: 5px 10px;
+      border-radius: 9999px;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 500;
+      width: fit-content;
+
+      &.beginner {
+        color: #16A34A;
+        background: #DCFCE7;
+      }
+
+      &.intermediate {
+        background: #FEF9C3;
+        color: #CA8A04;
+      }
+
+      &.advanced {
+        background: #fee2e2;
+        color: #dc2626;
+      }
+    }
+
+    .courseUpdate {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cardActions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: auto;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background 0.2s;
+
+        &:first-child {
+          background: #e0f2fe;
+          color: #0369a1;
+
+          &:hover {
+            background: #bae6fd;
+          }
+        }
+
+        &:last-child {
+          background: #fee2e2;
+          color: #b91c1c;
+
+          &:hover {
+            background: #fecaca;
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .cardsContainer {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 3.5rem;
+    }
+
+    .courseCard img {
+      height: 180px;
+    }
+  }
+
+
+  @media (max-width: 1024px) {
+    .cardsContainer {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .courseCard {
+      max-width: 280px;
+      padding: 0.9rem;
+    }
+
+    .courseCard img {
+      height: 140px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cardsContainer {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .courseCard {
+      max-width: 100%;
+      padding: 0.8rem;
+    }
+
+    .courseCard img {
+      height: 120px;
+    }
+
+    .cardActions button {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cardsContainer {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .courseCard {
+      max-width: 100%;
+      padding: 0.8rem;
+    }
+
+    .courseCard img {
+      height: 160px;
+    }
+
+    .courseLevel {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+    }
+  }
+
+
+  .modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modalCard {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 450px;
+  }
+
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    input,
+    select {
+      padding: 0.7rem;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      outline: none;
+      font-size: 1rem;
+
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 500;
+      transition: all .3s
+    }
+
+    .submitBtn {
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    .formbuttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .imageChoose {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+
+      &:hover {
+        border-color: var(--primary-color);
+      }
+    }
+
+    .imagePreview {
+      width: 120px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .cardsContainer {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .modalCard {
+      max-width: 400px;
+      padding: 1.8rem;
+    }
+
+    .form input,
+    .form select {
+      font-size: 0.95rem;
+      padding: 0.6rem;
+    }
+
+    .formButtons button {
+      font-size: 0.95rem;
+      padding: 0.55rem 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cardsContainer {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .modalCard {
+      width: 95%;
+      padding: 1.5rem;
+    }
+
+    .formButtons {
+      flex-direction: column;
+      gap: 0.5rem;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cardsContainer {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .modalCard {
+      width: 95%;
+      padding: 1rem;
+    }
+
+    .form input,
+    .form select {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+
+    .formButtons button {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+
+    .courseCard img {
+      height: 160px;
+    }
+  }
+
+}
