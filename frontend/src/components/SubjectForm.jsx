@@ -4,13 +4,13 @@ import styles from "../styles/SubjectSection.module.scss";
 
 const levels = ["Beginner", "Intermediate", "Advanced"];
 
-const SubjectForm = ({ onSave, editingSubject, onCancel }) => {
+const SubjectForm = ({ onSave, editingSubject, onCancel, courseId = null }) => {
   const [form, setForm] = useState({
     name: "",
     author: "",
     students: "",
     duration: "",
-    courseId: "",
+    courseId: courseId || "",
     level: "Beginner",
     image: "",
   });
@@ -25,23 +25,24 @@ const SubjectForm = ({ onSave, editingSubject, onCancel }) => {
         author: editingSubject.author || "",
         students: editingSubject.students || "",
         duration: editingSubject.duration || "",
+        courseId: editingSubject.courseId?._id || editingSubject.courseId || courseId || "",
         level: editingSubject.level || "Beginner",
         image: editingSubject.image || "",
       });
       if (editingSubject.image) setPreview(editingSubject.image);
     } else {
-
       setForm({
         name: "",
         author: "",
         students: "",
         duration: "",
+        courseId: courseId || "",
         level: "Beginner",
         image: "",
       });
       setPreview(null);
     }
-  }, [editingSubject]);
+  }, [editingSubject, courseId]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

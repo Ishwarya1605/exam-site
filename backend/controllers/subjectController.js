@@ -1,9 +1,11 @@
 const Subject = require("../models/subject.js");
+const Topic = require("../models/topic.js");
+const Question = require("../models/question.js");
 const { convertToBase64 } = require("../middleware/upload.js");
 
 const createSubject = async (req, res) => {
   try {
-    const { name, author, students, duration, level } = req.body;
+    const { name, author, students, duration, level, courseId } = req.body;
     const imageBase64 = req.file ? convertToBase64(req.file) : "";
 
     const newSubject = await Subject.create({
@@ -12,6 +14,7 @@ const createSubject = async (req, res) => {
       students,
       duration,
       level,
+      courseId: courseId || undefined,
       image: imageBase64,
     });
 
@@ -24,8 +27,56 @@ const createSubject = async (req, res) => {
 const getSubjects = async (req, res) => {
   try {
     const subjects = await Subject.find();
-    res.json(subjects);
+    
+    // Calculate topic and question counts for each subject
+    const subjectsWithCounts = await Promise.all(
+      subjects.map(async (subject) => {
+        const subjectId = subject._id;
+        
+        try {
+          // Count topics for this subject
+          const topicCount = await Topic.countDocuments({ 
+            subject: subjectId 
+          });
+          
+          let questionCount = 0;
+          
+          if (topicCount > 0) {
+            // Get all topics for this subject
+            const topics = await Topic.find({ 
+              subject: subjectId 
+            }).select("_id");
+            
+            if (topics && topics.length > 0) {
+              const topicIds = topics.map(t => t._id);
+              
+              // Count questions for these topics
+              questionCount = await Question.countDocuments({ 
+                topic: { $in: topicIds } 
+              });
+            }
+          }
+          
+          return {
+            ...subject.toObject(),
+            topicCount: topicCount || 0,
+            questionCount: questionCount || 0,
+          };
+        } catch (err) {
+          console.error(`Error calculating counts for subject ${subjectId}:`, err);
+          // Return subject with 0 counts if there's an error
+          return {
+            ...subject.toObject(),
+            topicCount: 0,
+            questionCount: 0,
+          };
+        }
+      })
+    );
+    
+    res.json(subjectsWithCounts);
   } catch (error) {
+    console.error("Error in getSubjects:", error);
     res.status(500).json({ error: error.message });
   }
 };

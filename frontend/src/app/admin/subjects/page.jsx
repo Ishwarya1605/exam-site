@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import SubjectSection from "../../../components/SubjectSection";
 import styles from "../../../styles/SubjectSection.module.scss";
 import {
@@ -18,6 +19,8 @@ export default function SubjectsPage() {
   const { subjects, error } = useSelector((state) => state.subjects);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get('courseId');
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
@@ -34,7 +37,17 @@ export default function SubjectsPage() {
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch subjects");
-        dispatch(setSubjects(data));
+        
+        // Filter subjects by courseId if provided
+        let filteredData = data;
+        if (courseId) {
+          filteredData = data.filter((subject) => {
+            const subjectCourseId = subject.courseId?._id || subject.courseId;
+            return String(subjectCourseId) === String(courseId);
+          });
+        }
+        
+        dispatch(setSubjects(filteredData));
       } catch (err) {
         dispatch(setError(err.message));
       } finally {
@@ -42,7 +55,7 @@ export default function SubjectsPage() {
       }
     };
     fetchSubjects();
-  }, [token, dispatch]);
+  }, [token, dispatch, courseId]);
 
   const handleSaveSubject = async (subjectData, editingSubject) => {
     try {
@@ -109,6 +122,7 @@ export default function SubjectsPage() {
         initialSubjects={subjects}
         onSaveSubject={handleSaveSubject}
         onDeleteSubject={handleDeleteSubject}
+        courseId={courseId}
       />
     </div>
   );

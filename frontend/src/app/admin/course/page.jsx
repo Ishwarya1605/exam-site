@@ -57,7 +57,11 @@ export default function CoursesPage() {
 
       Object.entries(courseData).forEach(([key, value]) => {
         if (value === undefined || value === null) return;
-        if (Array.isArray(value)) {
+        if (key === "image") {
+          // Handle file upload separately
+          if (value) formData.append(key, value);
+        } else if (Array.isArray(value)) {
+          // Stringify arrays (like subjects)
           formData.append(key, JSON.stringify(value));
         } else {
           formData.append(key, value);
@@ -71,19 +75,32 @@ export default function CoursesPage() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to save course");
+      if (!res.ok) {
+        // Extract error message from response
+        const errorMessage = data.error || data.message || "Failed to save course";
+        throw new Error(errorMessage);
+      }
 
-
+      // After saving, fetch the course again to get updated subjects
       if (isEditing) {
-        dispatch(updateCourse(data));
+        const updatedRes = await fetch(apiUrl(`/api/courses/${editingCourse._id}`), {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const updatedData = await updatedRes.json();
+        if (updatedRes.ok) {
+          dispatch(updateCourse(updatedData));
+          return updatedData;
+        }
       } else {
         dispatch(addCourse(data));
       }
 
       return data;
     } catch (err) {
+      // Return error message so it can be displayed in the modal
       dispatch(setError(err.message));
-      return null;
+      // Return error object with message so CourseSection can display it
+      return { error: err.message };
     }
   };
 

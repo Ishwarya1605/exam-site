@@ -71,18 +71,25 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await onSave({ ...form, image: imageFile });
-    onCancel();
-    setForm({
-      title: "",
-      description: "",
-      duration: "",
-      difficulty: "Beginner",
-      price: "",
-      subjects: [],
-    });
-    setImageFile(null);
-    setImagePreview(null);
+    // Map difficulty to level for backend
+    const { difficulty, ...rest } = form;
+    const result = await onSave({ ...rest, level: difficulty, image: imageFile });
+    
+    // Only close and reset if save was successful
+    if (result) {
+      onCancel();
+      setForm({
+        title: "",
+        description: "",
+        duration: "",
+        difficulty: "Beginner",
+        price: "",
+        subjects: [],
+      });
+      setImageFile(null);
+      setImagePreview(null);
+    }
+    // If result is null/undefined, there was an error - form stays open
   };
 
   const handleImageChange = (e) => {
@@ -141,11 +148,16 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
           style={{ width: "100%", maxHeight: 180, objectFit: "cover", borderRadius: 8 }}
         />
       )}
+
       <label style={{ fontSize: 12, color: "#555" }}>Subjects</label>
       <Select
         isMulti
         options={subjectOptions}
-        value={subjectOptions.filter((o) => form.subjects.includes(o.value))}
+        value={subjectOptions.filter((o) => 
+          form.subjects.some(subId => 
+            String(subId) === String(o.value)
+          )
+        )}
         onChange={handleSubjectsChange}
         classNamePrefix="react-select"
         placeholder="Select subjects..."

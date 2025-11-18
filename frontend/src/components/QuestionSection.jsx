@@ -9,7 +9,7 @@ import { cpp } from "@codemirror/lang-cpp";
 import { apiUrl } from "../lib/api"; 
 import styles from "../styles/QuestionSection.module.scss"; 
 
-export default function QuestionSection({ initialQuestions = [], topicId }) {
+export default function QuestionSection({ initialQuestions = [], topicId, readOnly = false }) {
   const [questions, setQuestions] = useState(initialQuestions);
   const [formData, setFormData] = useState({
     question: "",
@@ -85,12 +85,14 @@ export default function QuestionSection({ initialQuestions = [], topicId }) {
   return (
     <>
       <div className={styles.questionSection}>
-        <button
-          onClick={() => setShowForm(true)}
-          className={styles.addQuestionButton}
-        >
-          + Add Question
-        </button>
+        {!readOnly && (
+          <button
+            onClick={() => setShowForm(true)}
+            className={styles.addQuestionButton}
+          >
+            + Add Question
+          </button>
+        )}
 
         {error && <p className={styles.error}>{error}</p>}
 

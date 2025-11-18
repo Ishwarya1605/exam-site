@@ -13,16 +13,29 @@ import {
   LogOut,
   Book,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/AdminSidebar.module.scss";
 
 export default function AdminSidebar() {
   const { pathname } = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-   const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userRole, setUserRole] = useState(null);
 
-  const links = [
+  useEffect(() => {
+    // Get user role from localStorage
+    const userStr = localStorage.getItem("user");
+    try {
+      const user = userStr ? JSON.parse(userStr) : null;
+      setUserRole(user?.role || null);
+    } catch (e) {
+      console.error("Error parsing user from localStorage:", e);
+      setUserRole(null);
+    }
+  }, []);
+
+  const allLinks = [
     { href: "/admin/dashboard", label: "Dashboard", icon: <Home size={18} /> },
     { href: "/admin/course", label: "Course", icon: <FileText size={18} /> },
     { href: "/admin/subjects", label: "Subject", icon: <Book size={18} /> },
@@ -30,6 +43,13 @@ export default function AdminSidebar() {
     { href: "/admin/results", label: "Results", icon: <Award size={18} /> },
     { href: "/admin/settings", label: "Settings", icon: <Settings size={18} /> },
   ];
+
+  // Filter links based on user role
+  const links = userRole === "student"
+    ? allLinks.filter(link => 
+        link.href === "/admin/course" || link.href === "/admin/results"
+      )
+    : allLinks;
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");

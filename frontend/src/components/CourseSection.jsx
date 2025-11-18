@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Tooltip } from "@mui/material";
 import CourseForm from "./courseForm";
-import { FaTrash, FaEdit, FaSearch, FaUsers } from "react-icons/fa";
+import ErrorModal from "./ErrorModal";
+import { FaTrash, FaEdit, FaSearch } from "react-icons/fa";
 import styles from "../styles/Course.module.scss";
 
 export default function CourseSection({
@@ -14,6 +17,8 @@ export default function CourseSection({
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingCourse, setEditingCourse] = useState(null);
   const [filter, setFilter] = useState("");
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (courses.length === 0 && initialCourses.length > 0) {
@@ -39,21 +44,25 @@ export default function CourseSection({
 
 
   const handleSave = async (course) => {
+    setError(null); // Clear any previous errors
     const saved = await onSaveCourse(course, editingCourse);
-    if (saved) {
+    if (saved && !saved.error) {
       setCourses((prev) => {
         const exists = prev.some((c) => c._id === saved._id);
         if (exists) {
-
           return prev.map((c) => (c._id === saved._id ? saved : c));
         } else {
-
           return [...prev, saved];
         }
       });
+      // Only close form on success
+      setIsFormOpen(false);
+      setEditingCourse(null);
+    } else {
+      // Error occurred - show error modal but keep form open
+      const errorMessage = saved?.error || "Failed to save course. Please check the form and try again.";
+      setError(errorMessage);
     }
-    setIsFormOpen(false);
-    setEditingCourse(null);
   };
 
   const handleDelete = async (course) => {
@@ -62,6 +71,11 @@ export default function CourseSection({
 
     await onDeleteCourse(course._id || course.id);
     setCourses((prev) => prev.filter((c) => c._id !== (course._id || course.id)));
+  };
+
+  const handleCourseClick = (course) => {
+    const courseId = course._id || course.id;
+    navigate(`/admin/subjects?courseId=${courseId}`);
   };
 
   const colorMap = {
@@ -109,14 +123,17 @@ export default function CourseSection({
             <div
               key={course._id || course.id}
               className={styles.courseCard}
+              onClick={() => handleCourseClick(course)}
+              style={{ cursor: 'pointer' }}
             >
               {course.image && <img src={course.image} alt={course.title} />}
               <h3>{course.title}</h3>
-              <p>{course.author}</p>
+              {course.description && (
+                <Tooltip title={course.description} arrow placement="top">
+                  <p className={styles.courseDescription}>{course.description}</p>
+                </Tooltip>
+              )}
               <div className={styles.courseStudent}>
-                <p>
-                  <FaUsers /> {course.students} Students
-                </p>
                 <p
                   className={`${styles.courseLevel} ${styles[colorMap[course.level]]
                     }`}
@@ -125,14 +142,22 @@ export default function CourseSection({
                 </p>
               </div>
               <div className={styles.courseUpdate}>
-                <div>
-                  <p>{course.duration} weeks</p>
+                <div className={styles.courseStats}>
+                  {course.subjectCount !== undefined && (
+                    <p>{course.subjectCount} {course.subjectCount === 1 ? 'Subject' : 'Subjects'}</p>
+                  )}
+                  {course.questionCount !== undefined && (
+                    <p>{course.questionCount} {course.questionCount === 1 ? 'Question' : 'Questions'}</p>
+                  )}
+                  {course.subjectCount === undefined && course.questionCount === undefined && course.duration && (
+                    <p>{course.duration} weeks</p>
+                  )}
                 </div>
                 <div className={styles.cardActions}>
-                  <button onClick={() => handleEdit(course)}>
+                  <button onClick={(e) => { e.stopPropagation(); handleEdit(course); }}>
                     <FaEdit />
                   </button>
-                  <button onClick={() => handleDelete(course)}>
+                  <button onClick={(e) => { e.stopPropagation(); handleDelete(course); }}>
                     <FaTrash />
                   </button>
                 </div>
@@ -161,6 +186,8 @@ export default function CourseSection({
           </div>
         </div>
       )}
+
+      <ErrorModal error={error} onClose={() => setError(null)} />
     </div>
   );
 }

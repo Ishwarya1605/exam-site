@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Tooltip } from "@mui/material";
 import SubjectForm from "./SubjectForm";
 import { useNavigate } from "react-router-dom";
-import { FaTrash, FaEdit, FaSearch, FaUsers } from "react-icons/fa";
+import { FaTrash, FaEdit, FaSearch } from "react-icons/fa";
 import styles from "../styles/SubjectSection.module.scss";
 
 
@@ -11,6 +12,7 @@ export default function SubjectSection({
   initialSubjects = [],
   onSaveSubject,
   onDeleteSubject,
+  courseId = null,
 }) {
   const [subjects, setSubjects] = useState(initialSubjects || []);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -80,7 +82,22 @@ export default function SubjectSection({
 
 
   const handleSubjectClick = (subjectId) => {
-    navigate(`/admin/topic/${subjectId}`);
+    // Check user role from localStorage
+    const userStr = localStorage.getItem("user");
+    let user = null;
+    try {
+      user = userStr ? JSON.parse(userStr) : null;
+    } catch (e) {
+      console.error("Error parsing user from localStorage:", e);
+    }
+    
+    // If user role is "student", navigate to student topic page
+    if (user && user.role === "student") {
+      navigate(`/admin/topics/student/${subjectId}`);
+    } else {
+      // Admin/default behavior - navigate to topic list page
+      navigate(`/admin/topic/${subjectId}`);
+    }
   };
 
   return (
@@ -89,7 +106,11 @@ export default function SubjectSection({
       <div className={styles.subjectHeading}>
         <div>
           <h1>Subjects Management</h1>
-          <p>View, add, and organize all available subjects.</p>
+          <p>
+            {courseId 
+              ? "View subjects for the selected course." 
+              : "View, add, and organize all available subjects."}
+          </p>
         </div>
         <div>
           <button className={styles.createBtn} onClick={openModal}>
@@ -121,11 +142,12 @@ export default function SubjectSection({
               onClick={() => handleSubjectClick(subject._id || subject.id)}
             >              {subject.image && (<img src={subject.image} alt={subject.name} />)}
               <h3>{subject.name}</h3>
-              <p>{subject.author}</p>
+              {subject.description && (
+                <Tooltip title={subject.description} arrow placement="top">
+                  <p className={styles.subjectDescription}>{subject.description}</p>
+                </Tooltip>
+              )}
               <div className={styles.subjectStudent}>
-                <p>
-                  <FaUsers /> {subject.students} Students
-                </p>
                 <p
                   className={`${styles.subjectLevel} ${styles[colorMap[subject.level]]}`}
                 >
@@ -133,8 +155,17 @@ export default function SubjectSection({
                 </p>
               </div>
               <div className={styles.subjectUpdate}>
-                <div>
-                  <p>{subject.duration} weeks</p>
+                <div className={styles.subjectStats}>
+                  {subject.topicCount !== undefined ? (
+                    <p>{subject.topicCount} {subject.topicCount === 1 ? 'Topic' : 'Topics'}</p>
+                  ) : (
+                    <p>0 Topics</p>
+                  )}
+                  {subject.questionCount !== undefined ? (
+                    <p>{subject.questionCount} {subject.questionCount === 1 ? 'Question' : 'Questions'}</p>
+                  ) : (
+                    <p>0 Questions</p>
+                  )}
                 </div>
                 <div className={styles.cardActions}>
                   <button onClick={(e) => { e.stopPropagation(); handleEdit(subject) }
@@ -165,6 +196,7 @@ export default function SubjectSection({
                 onSave={handleSave}
                 editingSubject={editingSubject}
                 onCancel={handleCancel}
+                courseId={courseId}
               />
             </div>
           </div>

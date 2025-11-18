@@ -193,9 +193,31 @@
       border-radius: 8px;
     }
 
+    h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #0f172a;
+      word-wrap: break-word;
+    }
+
     p {
       margin: 0;
       font-size: 0.9rem;
+    }
+
+    .subjectDescription {
+      margin: 0 0 0.75rem 0;
+      font-size: 0.875rem;
+      color: #64748b;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
     }
 
     .subjectStudent {
@@ -225,6 +247,18 @@
       &.advanced {
         background: #fee2e2;
         color: #dc2626;
+      }
+    }
+
+    .subjectStats {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #64748b;
       }
     }
 

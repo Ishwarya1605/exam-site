@@ -271,16 +271,6 @@ export default function CourseDetailPage() {
                 </div>
               </div>
 
-              {/* Instructor */}
-              <div className={styles.courseInstructor}>
-                <div className={styles.instructorCard}>
-                  <div className={styles.instructorAvatar}>{(course.author || "A").slice(0,1)}</div>
-                  <div>
-                    <div className={styles.instructorName}>{course.author || "Instructor"}</div>
-                    <div className={styles.instructorBio}>Experienced educator and practitioner sharing real-world insights.</div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <aside className={styles.mainRight}>
