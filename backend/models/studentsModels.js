@@ -1,5 +1,21 @@
 const mongoose = require("mongoose");
 
+const purchasedCourseSchema = new mongoose.Schema({
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Course",
+    required: true,
+  },
+  courseTitle: {
+    type: String,
+    required: true,
+  },
+  purchasedDate: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const studentsSchema = new mongoose.Schema(
   {
     name: {
@@ -18,6 +34,15 @@ const studentsSchema = new mongoose.Schema(
       type: String,
       required:true,
        trim: true,
+    },
+    password: {
+      type: String,
+      default: "",
+    },
+    purchasedCourses: [purchasedCourseSchema],
+    mockInterviewsAvailable: {
+      type: Number,
+      default: 0,
     },
     isDeleted: {
       type: Boolean,

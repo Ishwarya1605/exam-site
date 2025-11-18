@@ -33,7 +33,7 @@ export default function StudentsPage() {
 
         const dataWithIds = data.map((s, index) => ({
           ...s,
-          id: s.id || index + 1,
+          id: s._id || s.id || index + 1,
         }));
 
         dispatch(setStudents(dataWithIds));
@@ -77,10 +77,38 @@ export default function StudentsPage() {
 
   if (loading) return <p>Loading students...</p>;
 
+  const handleRefresh = async () => {
+    try {
+      const res = await fetch(apiUrl("/api/students/student"));
+      if (!res.ok) throw new Error("Failed to fetch students");
+      const data = await res.json();
+      const dataWithIds = data.map((s, index) => ({
+        ...s,
+        id: s._id || s.id || index + 1,
+      }));
+      dispatch(setStudents(dataWithIds));
+    } catch (err) {
+      console.error("Error refreshing students:", err);
+    }
+  };
+
   return (
     <StudentsTable
       students={currentStudents}
-      onUpdate={(id, data) => dispatch(updateStudent({ id, data }))}
+      onUpdate={async (id, data) => {
+        try {
+          const res = await fetch(apiUrl(`/api/students/student/${id}`), {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          if (!res.ok) throw new Error("Failed to update student");
+          handleRefresh();
+        } catch (err) {
+          console.error(err);
+          alert("Failed to update student");
+        }
+      }}
       onDelete={(id) => dispatch(deleteStudent(id))}
       searchTerm={searchTerm}
       setSearchTerm={(term) => dispatch(setSearchTerm(term))}
@@ -91,6 +119,7 @@ export default function StudentsPage() {
       goNext={goNext}
       getPageNumbers={getPageNumbers}
       setCurrentPage={(num) => dispatch(setCurrentPage(num))}
+      onRefresh={handleRefresh}
     />
   );
 }

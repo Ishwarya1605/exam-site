@@ -50,7 +50,13 @@ export default function AdminSidebar() {
           ${collapsed ? styles.collapsed : ""} 
           ${mobileOpen ? styles.open : ""}`}
       >
-        <div className={styles.logo}>Exam Site</div>
+        <Link to="/" className={styles.logoLink}>
+          <img
+            className={styles.logoImg}
+            src="https://www.kiteztech.com/image/kitez-logo1.svg"
+            alt="ExamSite"
+          />
+        </Link>
 
         <nav>
           {links.map((link) => (

@@ -154,13 +154,19 @@ export default function SubjectSection({
       </div>
 
       {isFormOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalCard}>
-            <SubjectForm
-              onSave={handleSave}
-              editingSubject={editingSubject}
-              onCancel={handleCancel}
-            />
+        <div className={styles.sidebarOverlay} onClick={handleCancel}>
+          <div className={styles.sidebarCard} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.sidebarHeader}>
+              <h2>{editingSubject ? "Edit Subject" : "Add New Subject"}</h2>
+              <button className={styles.closeBtn} onClick={handleCancel}>×</button>
+            </div>
+            <div className={styles.sidebarContent}>
+              <SubjectForm
+                onSave={handleSave}
+                editingSubject={editingSubject}
+                onCancel={handleCancel}
+              />
+            </div>
           </div>
         </div>
       )}

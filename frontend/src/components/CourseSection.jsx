@@ -145,13 +145,19 @@ export default function CourseSection({
       </div>
 
       {isFormOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalCard}>
-            <CourseForm
-              onSave={handleSave}
-              editingCourse={editingCourse}
-              onCancel={handleCancel}
-            />
+        <div className={styles.sidebarOverlay} onClick={handleCancel}>
+          <div className={styles.sidebarCard} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.sidebarHeader}>
+              <h2>{editingCourse ? "Edit Course" : "Add New Course"}</h2>
+              <button className={styles.closeBtn} onClick={handleCancel}>×</button>
+            </div>
+            <div className={styles.sidebarContent}>
+              <CourseForm
+                onSave={handleSave}
+                editingCourse={editingCourse}
+                onCancel={handleCancel}
+              />
+            </div>
           </div>
         </div>
       )}

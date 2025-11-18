@@ -145,19 +145,82 @@
     .actionCell {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .coursesList {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .coursesContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .courseBadge {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 6px 10px;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .courseTitle {
+      font-weight: 500;
+      color: #0369a1;
+    }
+
+    .courseDate {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .moreCourses {
+      font-size: 0.8rem;
+      color: #64748b;
+      font-style: italic;
+      padding: 4px 0;
+    }
+
+    .noCourses {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .mockCount {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #ecfdf5;
+      color: #059669;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
     }
 
     .editBtn,
-    .deleteBtn {
+    .deleteBtn,
+    .passwordBtn {
       border: none;
       background: none;
       cursor: pointer;
       transition: all 0.3s ease;
       font-size: 1.1rem;
+      padding: 4px 8px;
 
       &.editBtn {
         color: var(--primary-color);
+      }
+
+      &.passwordBtn {
+        color: #f59e0b;
       }
 
       &.deleteBtn {
@@ -176,7 +239,6 @@
       overflow-x: auto;
       white-space: nowrap;
       border-radius: 10px;
-
 
       scrollbar-width: thin;
       scrollbar-color: var(--bg-color);
@@ -198,6 +260,16 @@
       td {
         padding: 10px 12px;
         font-size: 13px;
+      }
+
+      .courseBadge {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+      }
+
+      .mockCount {
+        font-size: 0.8rem;
+        padding: 3px 10px;
       }
     }
 
@@ -268,6 +340,287 @@
     }
   }
 
+  .sidebarOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .sidebarCard {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    overflow-y: auto;
+    animation: slideIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebarHeader {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .closeBtn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #6b7280;
+      padding: 0.5rem;
+      line-height: 1;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #0f172a;
+      }
+    }
+  }
+
+  .sidebarContent {
+    padding: 2rem;
+    flex: 1;
+  }
+
+  .editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    .label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    .formInput {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+    }
+
+    .formbuttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .submitBtn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+
+      &:hover:not(:disabled) {
+        background: var(--hover-color);
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .cancelBtn {
+      background: #f3f4f6;
+      color: #111;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+
+      &:hover:not(:disabled) {
+        background: #e5e7eb;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .coursesSection {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .coursesListEdit {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 0.5rem;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .courseItemEdit {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      gap: 0.5rem;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex: 1;
+      }
+    }
+
+    .courseTitleEdit {
+      font-weight: 500;
+      color: #0f172a;
+      font-size: 0.9rem;
+    }
+
+    .courseDateEdit {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    .removeCourseBtn {
+      background: #fee2e2;
+      color: #dc2626;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: #fecaca;
+        transform: scale(1.05);
+      }
+    }
+
+    .noCoursesText {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      font-style: italic;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .addCourseSection {
+      display: flex;
+      gap: 0.5rem;
+      align-items: stretch;
+    }
+
+    .courseSelect {
+      flex: 1;
+      padding: 0.7rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      background: #fff;
+
+      &:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+    }
+
+    .addCourseBtn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+      white-space: nowrap;
+
+      &:hover:not(:disabled) {
+        background: var(--hover-color);
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 
 

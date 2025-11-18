@@ -10,6 +10,7 @@ const SubjectForm = ({ onSave, editingSubject, onCancel }) => {
     author: "",
     students: "",
     duration: "",
+    courseId: "",
     level: "Beginner",
     image: "",
   });

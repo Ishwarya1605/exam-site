@@ -6,6 +6,8 @@ const courseSchema = new mongoose.Schema (
     author: {type: String, required: true},
     students: {type: Number,required:true},
     duration: {type: String, required: true},
+    price: {type: Number, default: 0},
+    compareAt: {type: Number},
 
     level: {
       type: String,

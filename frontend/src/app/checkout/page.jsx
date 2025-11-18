@@ -89,12 +89,11 @@ export default function CheckoutPage() {
               </div>
 
               <div className={styles.panel}>
-                <div className={styles.panelTitle}>Cancelation Policy</div>
+                <div className={styles.panelTitle}>Refund & Cancellation Policy</div>
                 <div className={styles.policyText}>
-                  We understand plans can change unexpectedly. You have the freedom to modify or cancel your reservation
-                  without incurring any cancelation fees up to 12 hours before your scheduled start.
+                  Because our products are digital interview packs, mock tests, and question banks, all purchases on our platform are final and non-refundable. Once content is unlocked, it cannot be returned.
                 </div>
-                <a href="#" className={styles.policyLink}>See more details</a>
+                <Link to="/refund-policy" className={styles.policyLink}>See more details</Link>
               </div>
             </div>
 
@@ -118,7 +117,7 @@ export default function CheckoutPage() {
               <label className={styles.termsRow}>
                 <input type="checkbox" defaultChecked />
                 <span>
-                  By clicking this, I agree to Terms & Conditions and Privacy Policy
+                  By clicking this, I agree to <Link to="/refund-policy" style={{ color: "#2563eb", textDecoration: "underline" }}>Refund & Cancellation Policy</Link> and Privacy Policy
                 </span>
               </label>
 
