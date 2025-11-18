@@ -8,6 +8,7 @@ import AdminSubjectsPage from './app/admin/subjects/page.jsx';
 import AdminStudentsPage from './app/admin/students/page.jsx';
 import AdminResultsPage from './app/admin/results/page.jsx';
 import AdminSettingsPage from './app/admin/settings/page.jsx';
+import AdminBookmarksPage from './app/admin/bookmarks/page.jsx';
 import AdminLoginPage from './app/admin/login/page.jsx';
 import AdminLogoutPage from './app/admin/logout/page.jsx';
 import AdminTopicPage from './app/admin/topic/[subjectId]/page.jsx';
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/admin/subjects" element={<AdminSubjectsPage />} />
         <Route path="/admin/students" element={<AdminStudentsPage />} />
         <Route path="/admin/results" element={<AdminResultsPage />} />
+        <Route path="/admin/bookmarks" element={<AdminBookmarksPage />} />
         <Route path="/admin/settings" element={<AdminSettingsPage />} />
         <Route path="/admin/topic/:subjectId" element={<AdminTopicPage />} />
         <Route path="/admin/topics/student/:subjectId" element={<StudentTopicPage />} />

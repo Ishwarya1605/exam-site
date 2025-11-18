@@ -517,11 +517,32 @@
     border-left: 4px solid var(--primary-color);
   }
 
+  &.completed {
+    background-color: #f0fdf4;
+    
+    &.active {
+      background-color: #dcfce7;
+    }
+  }
+
+  .topicItemContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .studentTopicItemTitle {
-    margin: 0 0 0.5rem 0;
+    margin: 0;
     font-size: 1rem;
     font-weight: 600;
     color: #0f172a;
+    flex: 1;
+  }
+
+  .completedIcon {
+    color: #16a34a;
+    flex-shrink: 0;
   }
 
   .studentTopicItemDesc {
@@ -549,6 +570,16 @@
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  > div:first-child {
+    flex: 1;
+    min-width: 200px;
+  }
 
   .studentTopicDetailTitle {
     margin: 0 0 0.5rem 0;
@@ -562,6 +593,11 @@
     font-size: 1rem;
     color: #64748b;
     line-height: 1.6;
+  }
+
+  .markCompleteButton {
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 }
 
@@ -601,8 +637,15 @@
   }
 
   .studentTopicDetailHeader {
+    flex-direction: column;
+    gap: 1rem;
+
     .studentTopicDetailTitle {
       font-size: 1.5rem;
+    }
+
+    .markCompleteButton {
+      width: 100%;
     }
   }
 }

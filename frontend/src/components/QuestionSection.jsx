@@ -7,7 +7,7 @@ import {
   AccordionDetails,
   Button,
 } from "@mui/material";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Bookmark, BookmarkCheck } from "lucide-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
@@ -19,6 +19,7 @@ import styles from "../styles/QuestionSection.module.scss";
 export default function QuestionSection({ initialQuestions = [], topicId, readOnly = false }) {
   const [questions, setQuestions] = useState(initialQuestions);
   const [expanded, setExpanded] = useState({});
+  const [bookmarkedQuestions, setBookmarkedQuestions] = useState(new Set());
   const [formData, setFormData] = useState({
     question: "",
     answer: "",
@@ -31,6 +32,47 @@ export default function QuestionSection({ initialQuestions = [], topicId, readOn
   useEffect(() => {
     setQuestions(initialQuestions);
   }, [initialQuestions]);
+
+  // Check bookmark status for all questions
+  useEffect(() => {
+    const checkBookmarks = async () => {
+      const userStr = localStorage.getItem("user");
+      if (!userStr) return;
+      
+      try {
+        const user = JSON.parse(userStr);
+        if (!user.id) return;
+
+        const bookmarkChecks = await Promise.all(
+          questions.map(async (q) => {
+            try {
+              const res = await fetch(
+                `${apiUrl("/api/bookmarks/check")}?studentId=${user.id}&questionId=${q._id}`
+              );
+              const data = await res.json();
+              return { questionId: q._id, isBookmarked: data.isBookmarked };
+            } catch (err) {
+              return { questionId: q._id, isBookmarked: false };
+            }
+          })
+        );
+
+        const bookmarkedSet = new Set();
+        bookmarkChecks.forEach((check) => {
+          if (check.isBookmarked) {
+            bookmarkedSet.add(check.questionId);
+          }
+        });
+        setBookmarkedQuestions(bookmarkedSet);
+      } catch (err) {
+        console.error("Error checking bookmarks:", err);
+      }
+    };
+
+    if (questions.length > 0) {
+      checkBookmarks();
+    }
+  }, [questions]);
 
   const handleAccordionChange = (questionId) => (event, isExpanded) => {
     setExpanded((prev) => ({
@@ -67,6 +109,55 @@ export default function QuestionSection({ initialQuestions = [], topicId, readOn
       return "cpp";
     }
     return "text";
+  };
+
+  const handleBookmarkToggle = async (questionId, e) => {
+    e.stopPropagation();
+    const userStr = localStorage.getItem("user");
+    if (!userStr) {
+      alert("Please login to bookmark questions");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userStr);
+      if (!user.id) {
+        alert("User ID not found");
+        return;
+      }
+
+      const isBookmarked = bookmarkedQuestions.has(questionId);
+      const endpoint = apiUrl("/api/bookmarks");
+      
+      if (isBookmarked) {
+        // Remove bookmark
+        const res = await fetch(endpoint, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ studentId: user.id, questionId }),
+        });
+        if (res.ok) {
+          setBookmarkedQuestions((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(questionId);
+            return newSet;
+          });
+        }
+      } else {
+        // Add bookmark
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ studentId: user.id, questionId }),
+        });
+        if (res.ok) {
+          setBookmarkedQuestions((prev) => new Set([...prev, questionId]));
+        }
+      }
+    } catch (err) {
+      console.error("Error toggling bookmark:", err);
+      alert("Failed to update bookmark");
+    }
   };
 
   const handleAddQuestion = async (e) => {
@@ -182,6 +273,17 @@ export default function QuestionSection({ initialQuestions = [], topicId, readOn
                     >
                       <div className={styles.questionNumber}>{index + 1}.</div>
                       <div className={styles.questionText}>{q.question}</div>
+                      <button
+                        className={`${styles.bookmarkButton} ${bookmarkedQuestions.has(q._id) ? styles.bookmarked : ""}`}
+                        onClick={(e) => handleBookmarkToggle(q._id, e)}
+                        title={bookmarkedQuestions.has(q._id) ? "Remove bookmark" : "Add bookmark"}
+                      >
+                        {bookmarkedQuestions.has(q._id) ? (
+                          <BookmarkCheck size={20} className={styles.bookmarkIcon} />
+                        ) : (
+                          <Bookmark size={20} className={styles.bookmarkIcon} />
+                        )}
+                      </button>
                     </AccordionSummary>
                     <AccordionDetails className={styles.questionDetails}>
                       {hasAnswer ? (

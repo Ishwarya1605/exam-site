@@ -36,9 +36,11 @@ export default function TopicDetailPage() {
       setLoading(true);
       setError(null);
       try {
+        // Fetch all questions for this topic (no pagination)
         const res = await fetch(apiUrl(`/api/questions/topic/${topicId}`));
         if (!res.ok) throw new Error("Failed to fetch questions");
         const data = await res.json();
+        // Store all questions - no pagination, all questions are displayed
         setQuestions(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error(err);

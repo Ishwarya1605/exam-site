@@ -64,11 +64,12 @@ const createMultipleQuestions = async (req, res) => {
   }
 };
 
-// Get all questions for a topic
+// Get all questions for a topic (no pagination - returns all questions)
 const getQuestionsByTopic = async (req, res) => {
   try {
     const topicId = req.params.topicId.trim();
 
+    // Fetch all questions for this topic without any limit
     const questions = await Question.find({ topic: topicId }).populate("topic", "topic");
 
     if (!questions.length) {

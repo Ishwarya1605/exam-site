@@ -1,0 +1,222 @@
+.bookmarkPage {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 60px);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    p {
+      margin: 0;
+      color: #64748b;
+      font-size: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
+
+  .loading,
+  .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .error {
+    color: #dc2626;
+  }
+
+  .bookmarksContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .courseAccordion {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+
+    &::before {
+      display: none;
+    }
+
+    .courseSummary {
+      padding: 20px 24px;
+      min-height: 70px;
+
+      .courseTitle {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #0f172a;
+        flex: 1;
+      }
+
+      .subjectCount {
+        color: #64748b;
+        font-size: 0.875rem;
+        margin-left: 1rem;
+      }
+    }
+
+    .courseDetails {
+      padding: 0;
+      background: #f9fafb;
+    }
+  }
+
+  .subjectAccordion {
+    background: #fff;
+    border-radius: 8px;
+    margin: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+
+    &::before {
+      display: none;
+    }
+
+    .subjectSummary {
+      padding: 16px 20px;
+      min-height: 60px;
+
+      .subjectTitle {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #1f2937;
+        flex: 1;
+      }
+
+      .questionCount {
+        color: #64748b;
+        font-size: 0.875rem;
+        margin-left: 1rem;
+      }
+    }
+
+    .subjectDetails {
+      padding: 0;
+      background: #f9fafb;
+    }
+  }
+
+  .questionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .questionItem {
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    .questionHeader {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+
+      .questionNumber {
+        font-weight: 600;
+        color: var(--primary-color);
+        font-size: 1rem;
+        min-width: 30px;
+      }
+
+      .questionText {
+        flex: 1;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #1f2937;
+        line-height: 1.5;
+        word-wrap: break-word;
+      }
+
+      .bookmarkIcon {
+        color: var(--primary-color);
+        flex-shrink: 0;
+      }
+    }
+
+    .answerContainer {
+      margin-top: 12px;
+
+      .textAnswer {
+        background: #f9fafb;
+        padding: 16px;
+        border-radius: 6px;
+        border: 1px solid #e5e7eb;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #374151;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    }
+
+    .noAnswer {
+      padding: 12px;
+      text-align: center;
+      color: #9ca3af;
+      font-style: italic;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+
+    .header {
+      flex-direction: column;
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .controls {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    .courseAccordion .courseSummary {
+      padding: 16px;
+
+      .courseTitle {
+        font-size: 1.25rem;
+      }
+    }
+
+    .subjectAccordion .subjectSummary {
+      padding: 12px 16px;
+
+      .subjectTitle {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
