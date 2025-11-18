@@ -83,7 +83,7 @@ export default function TopicsPage({ params }) {
       <div className={styles.topicBtn}>
 
         <h1 className={styles.topicsTitle}>
-          Topics for Subject: {topics[0]?.subject?.name || subjectId}
+          Topics for Subject: {topics[0]?.subject?.title || topics[0]?.subject?.name || subjectId}
         </h1>
 
         <button

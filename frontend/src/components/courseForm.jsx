@@ -62,7 +62,7 @@ const CourseForm = ({ onSave, editingCourse, onCancel }) => {
 
   const subjectOptions = allSubjects.map((s) => ({
     value: s._id || s.id,
-    label: s.name,
+    label: s.title || s.name,
   }));
 
   const handleSubjectsChange = (values) => {

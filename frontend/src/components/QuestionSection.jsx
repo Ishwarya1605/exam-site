@@ -1,6 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Button,
+} from "@mui/material";
+import { ChevronDown } from "lucide-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
@@ -11,6 +18,7 @@ import styles from "../styles/QuestionSection.module.scss";
 
 export default function QuestionSection({ initialQuestions = [], topicId, readOnly = false }) {
   const [questions, setQuestions] = useState(initialQuestions);
+  const [expanded, setExpanded] = useState({});
   const [formData, setFormData] = useState({
     question: "",
     answer: "",
@@ -23,6 +31,43 @@ export default function QuestionSection({ initialQuestions = [], topicId, readOn
   useEffect(() => {
     setQuestions(initialQuestions);
   }, [initialQuestions]);
+
+  const handleAccordionChange = (questionId) => (event, isExpanded) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [questionId]: isExpanded,
+    }));
+  };
+
+  const handleExpandAll = () => {
+    const allExpanded = {};
+    questions.forEach((q) => {
+      allExpanded[q._id] = true;
+    });
+    setExpanded(allExpanded);
+  };
+
+  const handleCollapseAll = () => {
+    setExpanded({});
+  };
+
+  const detectLanguage = (answer) => {
+    if (!answer) return "text";
+    const trimmed = answer.trim();
+    if (trimmed.startsWith("function") || trimmed.includes("const ") || trimmed.includes("let ") || trimmed.includes("var ")) {
+      return "javascript";
+    }
+    if (trimmed.startsWith("def ") || trimmed.startsWith("import ") || trimmed.startsWith("from ")) {
+      return "python";
+    }
+    if (trimmed.startsWith("public class") || trimmed.startsWith("import java")) {
+      return "java";
+    }
+    if (trimmed.startsWith("#include") || trimmed.includes("std::")) {
+      return "cpp";
+    }
+    return "text";
+  };
 
   const handleAddQuestion = async (e) => {
     e.preventDefault();
@@ -99,13 +144,74 @@ export default function QuestionSection({ initialQuestions = [], topicId, readOn
         {!questions || questions.length === 0 ? (
           <p>No questions found.</p>
         ) : (
-          <ul className={styles.questionsList}>
-            {questions.map((q, index) => (
-              <li key={q._id}>
-                {index + 1}. {q.question}
-              </li>
-            ))}
-          </ul>
+          <>
+            <div className={styles.accordionControls}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleExpandAll}
+                className={styles.expandButton}
+              >
+                Expand All
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleCollapseAll}
+                className={styles.collapseButton}
+              >
+                Collapse All
+              </Button>
+            </div>
+            <div className={styles.questionsList}>
+              {questions.map((q, index) => {
+                const isExpanded = expanded[q._id] || false;
+                const answerLanguage = detectLanguage(q.answer);
+                const hasAnswer = q.answer && q.answer.trim().length > 0;
+
+                return (
+                  <Accordion
+                    key={q._id}
+                    expanded={isExpanded}
+                    onChange={handleAccordionChange(q._id)}
+                    className={styles.questionAccordion}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ChevronDown size={20} />}
+                      className={styles.questionSummary}
+                    >
+                      <div className={styles.questionNumber}>{index + 1}.</div>
+                      <div className={styles.questionText}>{q.question}</div>
+                    </AccordionSummary>
+                    <AccordionDetails className={styles.questionDetails}>
+                      {hasAnswer ? (
+                        <div className={styles.answerContainer}>
+                          {answerLanguage !== "text" ? (
+                            <CodeMirror
+                              value={q.answer}
+                              height="auto"
+                              extensions={[getLanguageExtension(answerLanguage)]}
+                              editable={false}
+                              basicSetup={{
+                                lineNumbers: true,
+                                foldGutter: true,
+                                readOnly: true,
+                              }}
+                              theme="light"
+                            />
+                          ) : (
+                            <div className={styles.textAnswer}>{q.answer}</div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className={styles.noAnswer}>No answer available</div>
+                      )}
+                    </AccordionDetails>
+                  </Accordion>
+                );
+              })}
+            </div>
+          </>
         )}
       </div>
 

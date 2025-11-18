@@ -6,10 +6,8 @@ const levels = ["Beginner", "Intermediate", "Advanced"];
 
 const SubjectForm = ({ onSave, editingSubject, onCancel, courseId = null }) => {
   const [form, setForm] = useState({
-    name: "",
-    author: "",
-    students: "",
-    duration: "",
+    title: "",
+    description: "",
     courseId: courseId || "",
     level: "Beginner",
     image: "",
@@ -21,10 +19,8 @@ const SubjectForm = ({ onSave, editingSubject, onCancel, courseId = null }) => {
   useEffect(() => {
     if (editingSubject) {
       setForm({
-        name: editingSubject.name || "",
-        author: editingSubject.author || "",
-        students: editingSubject.students || "",
-        duration: editingSubject.duration || "",
+        title: editingSubject.title || editingSubject.name || "",
+        description: editingSubject.description || "",
         courseId: editingSubject.courseId?._id || editingSubject.courseId || courseId || "",
         level: editingSubject.level || "Beginner",
         image: editingSubject.image || "",
@@ -32,10 +28,8 @@ const SubjectForm = ({ onSave, editingSubject, onCancel, courseId = null }) => {
       if (editingSubject.image) setPreview(editingSubject.image);
     } else {
       setForm({
-        name: "",
-        author: "",
-        students: "",
-        duration: "",
+        title: "",
+        description: "",
         courseId: courseId || "",
         level: "Beginner",
         image: "",
@@ -65,10 +59,8 @@ const SubjectForm = ({ onSave, editingSubject, onCancel, courseId = null }) => {
     await onSave({ ...form, image: file || form.image });
     onCancel();
     setForm({
-      name: "",
-      author: "",
-      students: "",
-      duration: "",
+      title: "",
+      description: "",
       level: "Beginner",
       image: "",
     });
@@ -79,10 +71,15 @@ const SubjectForm = ({ onSave, editingSubject, onCancel, courseId = null }) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
-      <input name="author" placeholder="Author" value={form.author} onChange={handleChange} required />
-      <input name="students" placeholder="Students" type="number" value={form.students} onChange={handleChange} />
-      <input name="duration" placeholder="Duration (weeks)" type="number" value={form.duration} onChange={handleChange} />
+      <input name="title" placeholder="Title" value={form.title} onChange={handleChange} required />
+      <textarea 
+        name="description" 
+        placeholder="Description" 
+        value={form.description} 
+        onChange={handleChange}
+        rows={4}
+        className={styles.textarea}
+      />
       <select name="level" value={form.level} onChange={handleChange}>
         {levels.map((lvl) => (<option key={lvl}>{lvl}</option>))}
       </select>

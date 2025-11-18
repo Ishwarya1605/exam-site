@@ -39,11 +39,9 @@ const createCourse = async (req, res) => {
     // Link selected subjects to this course (don't fail course creation if this fails)
     if (subjectsArray.length > 0) {
       try {
-        // First verify subjects exist and have required fields
+        // First verify subjects exist
         const validSubjects = await Subject.find({
-          _id: { $in: subjectsArray },
-          author: { $exists: true, $ne: null },
-          students: { $exists: true, $ne: null }
+          _id: { $in: subjectsArray }
         }).select('_id');
         
         const validSubjectIds = validSubjects.map(s => s._id);
@@ -213,12 +211,10 @@ const updateCourse = async (req, res) => {
         
         // Link new selected subjects to this course
         if (subjectsArray.length > 0) {
-          // First verify subjects exist and have required fields
-          const validSubjects = await Subject.find({
-            _id: { $in: subjectsArray },
-            author: { $exists: true, $ne: null },
-            students: { $exists: true, $ne: null }
-          }).select('_id');
+            // First verify subjects exist
+            const validSubjects = await Subject.find({
+              _id: { $in: subjectsArray }
+            }).select('_id');
           
           const validSubjectIds = validSubjects.map(s => s._id);
           

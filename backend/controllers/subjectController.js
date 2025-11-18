@@ -5,15 +5,13 @@ const { convertToBase64 } = require("../middleware/upload.js");
 
 const createSubject = async (req, res) => {
   try {
-    const { name, author, students, duration, level, courseId } = req.body;
+    const { title, description, level, courseId } = req.body;
     const imageBase64 = req.file ? convertToBase64(req.file) : "";
 
     const newSubject = await Subject.create({
-      name,
-      author,
-      students,
-      duration,
-      level,
+      title,
+      description: description || "",
+      level: level || "Beginner",
       courseId: courseId || undefined,
       image: imageBase64,
     });
@@ -93,15 +91,13 @@ const getSubjectById = async (req, res) => {
 
 const updateSubject = async (req, res) => {
   try {
-    const { name, author, students, duration, level } = req.body;
+    const { title, description, level } = req.body;
     const subject = await Subject.findById(req.params.id);
     if (!subject) return res.status(404).json({ message: "Subject not found" });
 
     if (req.file) subject.image = convertToBase64(req.file);
-    if (name) subject.name = name;
-    if (author) subject.author = author;
-    if (students) subject.students = students;
-    if (duration) subject.duration = duration;
+    if (title !== undefined) subject.title = title;
+    if (description !== undefined) subject.description = description;
     if (level) subject.level = level;
 
     const updatedSubject = await subject.save();

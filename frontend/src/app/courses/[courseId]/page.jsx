@@ -166,7 +166,7 @@ export default function CourseDetailPage() {
                     {subjects.map((s, index) => (
                       <details key={s._id || s.id} className={styles.syllabusItem}>
                         <summary>
-                          <span>Week {index + 1}: {s.name}</span>
+                          <span>Week {index + 1}: {s.title || s.name}</span>
                           <span className={styles.summaryMeta}>{s.level || "All Levels"}</span>
                         </summary>
                         <div className={styles.syllabusBody}>

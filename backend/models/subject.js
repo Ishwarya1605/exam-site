@@ -2,10 +2,8 @@ const mongoose = require("mongoose");
 
 const subjectSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    author: { type: String, required: true },
-    students: { type: Number, required: true },
-    duration: { type: String, required: true },
+    title: { type: String, required: true },
+    description: { type: String },
     courseId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Course",

@@ -77,8 +77,11 @@ export default function SubjectSection({
   };
 
   const filteredSubjects = subjects
-    .filter((s) => s && s.name)
-    .filter((s) => s.name.toLowerCase().includes(filter.toLowerCase()));
+    .filter((s) => s && (s.title || s.name))
+    .filter((s) => {
+      const title = s.title || s.name || "";
+      return title.toLowerCase().includes(filter.toLowerCase());
+    });
 
 
   const handleSubjectClick = (subjectId) => {
@@ -140,8 +143,8 @@ export default function SubjectSection({
               key={subject._id || subject.id}
               className={styles.subjectCard}
               onClick={() => handleSubjectClick(subject._id || subject.id)}
-            >              {subject.image && (<img src={subject.image} alt={subject.name} />)}
-              <h3>{subject.name}</h3>
+            >              {subject.image && (<img src={subject.image} alt={subject.title || subject.name || "Subject"} />)}
+              <h3>{subject.title || subject.name}</h3>
               {subject.description && (
                 <Tooltip title={subject.description} arrow placement="top">
                   <p className={styles.subjectDescription}>{subject.description}</p>
