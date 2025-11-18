@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import styles from "@/styles/landing.module.scss";
 import { apiUrl } from "@/lib/api";
 import { useDispatch } from "react-redux";
@@ -121,7 +121,7 @@ export default function CourseDetailPage() {
                 <span className={styles.badge}>{course.duration ? `${course.duration} weeks` : "Self‑paced"}</span>
                 <span className={styles.badge}>Certificate on completion</span>
               </div>
-              <button className={styles.wishlistBtn} onClick={() => alert("Added to wishlist!")}>♡ Add to Wishlist</button>
+              {/* <button className={styles.wishlistBtn} onClick={() => alert("Added to wishlist!")}>♡ Add to Wishlist</button> */}
             </div>
           </div>
         </div>
@@ -138,19 +138,19 @@ export default function CourseDetailPage() {
                   <div>
                     <h2>What You’ll Learn</h2>
                     <ul className={styles.checkList}>
-                      <li>Craft precise prompts for various tools</li>
-                      <li>Use prompt patterns to generate better outputs</li>
-                      <li>Apply AI in writing, design, coding and productivity</li>
-                      <li>Avoid common mistakes and build reliable workflows</li>
+                      <li>Understand real interview patterns across multiple domains</li>
+                      <li>Improve problem-solving and confidence through repeated practice</li>
+                      <li>Practice with curated interview questions asked by top companies</li>
+                      <li>Build consistency and accuracy with structured question banks</li>
                     </ul>
                   </div>
                   <div>
-                    <h2>Who This Course is For</h2>
+                    <h2>Who This Platform  is For</h2>
                     <ul className={styles.checkList}>
-                      <li>Beginners looking to upskill</li>
-                      <li>Content creators and marketers</li>
-                      <li>Developers and product builders</li>
-                      <li>Anyone curious about mastering topics efficiently</li>
+                      <li>Job seekers preparing for their first or next interview</li>
+                      <li>Students and freshers aiming to improve interview confidence</li>
+                      <li>Working professionals looking to switch careers or upskill</li>
+                      <li>Anyone preparing for technical or non-technical job roles</li>
                     </ul>
                   </div>
                 </div>
@@ -220,7 +220,14 @@ export default function CourseDetailPage() {
                     },
                     {
                       q: "Can I request a refund?",
-                      a: "Refunds are subject to our refund policy. If you face any issue, please contact support and we’ll assist you.",
+                      a: (
+                        <>
+                          Refunds are subject to our refund policy. Because our products are digital, purchases are generally final. However, refunds may be considered for technical issues or duplicate charges.{" "}
+                          <Link to="/refund-policy" style={{ color: "#2563eb", textDecoration: "underline" }}>
+                            See our Refund & Cancellation Policy for details
+                          </Link>.
+                        </>
+                      ),
                     },
                     {
                       q: "How can I contact support?",
@@ -237,7 +244,7 @@ export default function CourseDetailPage() {
 
               {/* Related courses */}
               <div className={styles.relatedSection}>
-                <h2>Keep the Momentum Going</h2>
+                <h2>Other Courses</h2>
                 <div className={styles.relatedGrid}>
                   {related.map((c) => (
                     <article key={c._id || c.id} className={styles.relatedCard} onClick={() => navigate(`/courses/${c._id || c.id}`)}>
@@ -245,9 +252,19 @@ export default function CourseDetailPage() {
                       <div className={styles.relatedBody}>
                         <h3>{c.title}</h3>
                         <p className={styles.cardMeta}>
-                          <span>{c.author || "Author"}</span>
-                          <span>{c.duration ? `${c.duration} weeks` : ""}</span>
+                          <span>{c.subjectCount || 0} Subjects</span>
+                          <span>{c.questionCount ? `${c.questionCount}+ Question Answers` : "100+ Question Answers"}</span>
                         </p>
+                        <div className={styles.cardPrice}>
+                          <span className={styles.priceNow}>
+                            ₹{new Intl.NumberFormat('en-IN').format(c.price || 0)}
+                          </span>
+                          {c.compareAt && (
+                            <span className={styles.priceWas}>
+                              ₹{new Intl.NumberFormat('en-IN').format(c.compareAt)}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </article>
                   ))}
@@ -270,8 +287,8 @@ export default function CourseDetailPage() {
               <div className={styles.priceCard}>
                 {course.image && <img className={styles.priceCardImg} src={course.image} alt={course.title} />}
                 <div className={styles.priceRow}>
-                  <div className={styles.priceNow}>${course.price || 49}</div>
-                  {course.compareAt && <div className={styles.priceWas}>${course.compareAt}</div>}
+                  <div className={styles.priceNow}>₹{new Intl.NumberFormat('en-IN').format(course.price || 0)}</div>
+                  {course.compareAt && <div className={styles.priceWas}>₹{new Intl.NumberFormat('en-IN').format(course.compareAt)}</div>}
                 </div>
                 <div className={styles.smallNote}>One-time payment</div>
                 <div className={styles.couponRow}>
@@ -291,12 +308,12 @@ export default function CourseDetailPage() {
                   <button className={styles.detailsBtn} onClick={() => navigate(-1)}>Back</button>
                 </div>
                 <div className={styles.whatsIncluded}>
-                  <div className={styles.whatsTitle}>What You’ll Get</div>
+                  <div className={styles.whatsTitle}>What You'll Get</div>
                   <ul>
-                    <li>Lifetime access to 12+ video lessons</li>
-                    <li>Prompt templates & real-world use cases</li>
-                    <li>Peer learning group access</li>
-                    <li>Mini projects + certificate</li>
+                    <li>Access to 500+ curated interview questions and answer</li>
+                    <li>3 full-length mock tests that simulate real interview and exam conditions</li>
+                    <li>Performance analytics & detailed feedback after every mock test</li>
+                    <li>Certification upon successful completion of the final mock test</li>
                   </ul>
                 </div>
               </div>

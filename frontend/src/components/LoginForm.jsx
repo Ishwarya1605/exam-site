@@ -37,8 +37,7 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={(e) => e.preventDefault()}>
-        <h2>Admin Login</h2>
-
+  
         <div className={styles.inputWrapper}>
           <FaUser className={styles.icon} />
           <input

@@ -206,6 +206,7 @@
     flex-direction: column;
     transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
     will-change: transform, box-shadow;
+    cursor: pointer;
 
     &:hover {
       transform: translateY(-2px);
@@ -235,22 +236,41 @@
         font-size: 13px;
       }
 
-      .cardActions {
-        margin-top: 10px;
+      .cardPriceRow {
+        margin: 12px 0;
         display: flex;
-        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
       }
 
-      .detailsBtn {
-        @extend .btn;
-        background: #0f172a;
-        color: #e5e7eb;
+      .cardPrice {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        flex: 1;
+
+        .priceNow {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: #0f172a;
+        }
+
+        .priceWas {
+          font-size: 1rem;
+          color: #94a3b8;
+          text-decoration: line-through;
+        }
       }
 
       .buyBtn {
         @extend .btn;
-        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-        color: #052e16;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        color: #fff;
+        white-space: nowrap;
+        flex-shrink: 0;
       }
     }
   }
@@ -386,8 +406,8 @@
 
 .buyBtn {
   @extend .btn;
-  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-  color: #052e16;
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+  color: #fff;
 }
 
 /* Checkout layout */
@@ -866,6 +886,26 @@
     transform: translateY(-2px);
     border-color: #d1d5db;
     box-shadow: 0 12px 30px rgba(2, 6, 23, .06);
+  }
+
+  .cardPrice {
+    margin: 12px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    .priceNow {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .priceWas {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      text-decoration: line-through;
+    }
   }
 
   img {

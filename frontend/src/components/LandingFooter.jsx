@@ -17,8 +17,12 @@ export default function LandingFooter() {
             </div>
             <div>
               <h4>Company</h4>
-              <a href="#about">About</a>
-              <a href="#contact">Contact</a>
+              <a href="/about">About</a>
+              <a href="/contact">Contact</a>
+            </div>
+            <div>
+              <h4>Legal</h4>
+              <a href="/refund-policy">Refund & Cancellation Policy</a>
             </div>
           </div>
         </div>

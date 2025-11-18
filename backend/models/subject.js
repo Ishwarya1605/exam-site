@@ -6,6 +6,10 @@ const subjectSchema = new mongoose.Schema(
     author: { type: String, required: true },
     students: { type: Number, required: true },
     duration: { type: String, required: true },
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+    },
     level: {
       type: String,
       enum: ["Beginner", "Intermediate", "Advanced"],

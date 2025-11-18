@@ -20,6 +20,7 @@ import AboutPage from './app/about/page.jsx';
 import ContactPage from './app/contact/page.jsx';
 import PublicLoginPage from './app/login/page.jsx';
 import SignupPage from './app/signup/page.jsx';
+import RefundPolicyPage from './app/refund-policy/page.jsx';
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<CheckoutPage />} />
+      <Route path="/refund-policy" element={<RefundPolicyPage />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
