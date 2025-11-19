@@ -506,6 +506,40 @@
   margin-bottom: 10px;
 }
 
+.paymentOption {
+  margin-top: 12px;
+}
+
+.paymentMethodLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fff;
+
+  &:hover {
+    border-color: #2563eb;
+    background: #f8fafc;
+  }
+
+  input[type="radio"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    accent-color: #2563eb;
+  }
+
+  span {
+    font-weight: 500;
+    color: #374151;
+    font-size: 15px;
+  }
+}
+
 .inputLabel {
   display: block;
   font-size: 12px;

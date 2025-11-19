@@ -34,12 +34,12 @@ export default function CheckoutPage() {
           <div className={styles.checkoutGrid}>
 
             <div className={styles.leftCol}>
-              <div className={styles.banner}>
+              {/* <div className={styles.banner}>
                 <div className={styles.bannerTitle}>Your Booking is on Hold</div>
                 <div className={styles.bannerText}>
                   We hold your booking until <b>Feb 14, 12:00 AM</b>. If your reserve change, we will get back to you.
                 </div>
-              </div>
+              </div> */}
 
               <div className={styles.panel}>
                 <div className={styles.panelTitle}>User Details</div>
@@ -73,18 +73,12 @@ export default function CheckoutPage() {
 
               <div className={styles.panel}>
                 <div className={styles.panelTitle}>Payment Detail</div>
-                <div className={styles.helpText}>Please fill out the form below. Enter your card account details.</div>
-                <label className={styles.inputLabel}>Card Number</label>
-                <input className={styles.textInput} placeholder="1243 2133 9832 3200" />
-                <div className={styles.row2}>
-                  <div>
-                    <label className={styles.inputLabel}>Expire Date</label>
-                    <input className={styles.textInput} placeholder="MM/YY" />
-                  </div>
-                  <div>
-                    <label className={styles.inputLabel}>CVC/CVV</label>
-                    <input className={styles.textInput} placeholder="453" />
-                  </div>
+                <div className={styles.helpText}>Select your preferred payment method.</div>
+                <div className={styles.paymentOption}>
+                  <label className={styles.paymentMethodLabel}>
+                    <input type="radio" name="paymentMethod" value="razorpay" defaultChecked />
+                    <span>Razorpay</span>
+                  </label>
                 </div>
               </div>
 
